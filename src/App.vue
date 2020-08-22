@@ -1,21 +1,21 @@
 <template>
   <v-app>
     <v-main>
-      <Axios />
+      <Home />
     </v-main>
   </v-app>
 </template>
 
 <script>
-// import Home from './views/Home'
-import Axios from './views/Axios'
+import Home from './views/Home'
+// import Axios from './views/Axios'
 
 export default {
   name: 'App',
 
   components: {
-    // Home
-    Axios
+    Home
+    // Axios
   },
 
   data: () => ({
