@@ -37,7 +37,7 @@ export default {
 .bv-example-row {
   padding: 0;
   margin: 0;
-  height: 90vh;
+  height: 100vh;
   overflow: hidden;
 }
 
@@ -48,7 +48,5 @@ export default {
 .col-8 {
   background-color: #fafafa;
   padding: 0;
-  height: 90vh;
-  overflow: scroll;
 }
 </style>

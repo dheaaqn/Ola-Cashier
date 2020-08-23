@@ -13,17 +13,9 @@
         <p>
           <span>Choose</span> Order
         </p>
-        <b-row cols="3">
-          <b-col>
-            <Card />
-          </b-col>
-          <b-col>
-            <Card />
-          </b-col>
-          <b-col>
-            <Card />
-          </b-col>
-        </b-row>
+        <div class="scrollable">
+          <Card />
+        </div>
       </b-col>
     </b-row>
   </div>
@@ -53,5 +45,11 @@ p {
 
 p span {
   font-weight: 600;
+}
+
+.scrollable {
+  height: 50vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 </style>
