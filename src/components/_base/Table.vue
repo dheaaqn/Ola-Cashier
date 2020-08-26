@@ -28,7 +28,12 @@
             >
               <b-icon icon="pencil-square" variant="light"></b-icon>
             </b-button>
-            <b-button size="sm" variant="danger" class="mr-1" @click="row.toggleDelete">
+            <b-button
+              size="sm"
+              variant="danger"
+              class="mr-1"
+              @click="deleteProduct(products[row.index].product_id)"
+            >
               <b-icon icon="trash" variant="light"></b-icon>
             </b-button>
           </template>
@@ -194,6 +199,17 @@ export default {
       }
       this.isUpdate = true
       this.product_id = data.product_id
+    },
+    deleteProduct(id) {
+      axios
+        .delete(`http://127.0.0.1:3000/product/${id}`)
+        .then((res) => {
+          console.log(this.products)
+          this.getProduct()
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     },
     openModal() {
       this.$refs['add-product-modal'].show()
