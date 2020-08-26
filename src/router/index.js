@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import Product from '../views/Product.vue'
 
 Vue.use(VueRouter)
 
@@ -11,9 +12,9 @@ const routes = [
     component: Home
   },
   {
-    path: '/axios',
-    name: 'Axios',
-    component: () => import('../views/Axios.vue')
+    path: '/product',
+    name: 'Product',
+    component: Product
   },
   {
     path: '/lifecycle',

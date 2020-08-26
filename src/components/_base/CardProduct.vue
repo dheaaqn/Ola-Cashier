@@ -10,7 +10,7 @@
           style="width: 100px; height: 100px; object-fit: cover;"
         ></b-img>
         <b-card-text>{{item.product_name}}</b-card-text>
-        <b-card-text>{{item.product_price}}</b-card-text>
+        <b-card-text class="price">Rp. {{item.product_price}}</b-card-text>
         <b-button variant="outline-light">
           <b-icon icon="cart-plus" aria-label="add to cart"></b-icon>
         </b-button>
@@ -20,6 +20,9 @@
 </template>
 
 <style scoped>
+.price {
+  font-weight: 600;
+}
 </style>
 
 <script>
@@ -27,11 +30,10 @@ import axios from 'axios'
 
 export default {
   name: 'Card',
-  props: ['name', 'price'],
   data() {
     return {
       page: 1,
-      limit: 6,
+      limit: 9,
       sort: 'product_name',
       products: []
     }
@@ -43,7 +45,7 @@ export default {
     getProduct() {
       axios
         .get(
-          `http://127.0.0.1:3000/product?search&sort=${this.sort}&page=${this.page}&limit=${this.limit}`
+          `http://127.0.0.1:3000/product?sort=${this.sort}&page=${this.page}&limit=${this.limit}`
         )
         .then((res) => {
           this.products = res.data.data

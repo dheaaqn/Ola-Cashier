@@ -1,26 +1,24 @@
 <template>
   <div class="bv-example-row">
-    <b-row align-v="start">
+    <b-row>
       <b-col cols="1">
         <Drawer />
       </b-col>
-      <b-col cols="8">
-        <Content />
+      <b-col cols="11">
+        <Table />
       </b-col>
-      <b-col cols="3"></b-col>
     </b-row>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import Content from '../components/_modules/Content'
+import Table from '../components/_base/Table'
 import Drawer from '../components/_base/Drawer'
 
 export default {
-  name: 'Home',
+  name: 'Product',
   components: {
-    Content,
+    Table,
     Drawer
   }
 }
@@ -34,12 +32,8 @@ export default {
   overflow: hidden;
 }
 
-.col-1 {
-  padding: 0;
-}
-
-.col-8 {
+.col-11 {
+  padding: 0px 56px;
   background-color: #fafafa;
-  padding: 0;
 }
 </style>
