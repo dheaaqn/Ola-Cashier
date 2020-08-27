@@ -1,6 +1,6 @@
 <template>
   <div class="bv-example-row">
-    <b-row>
+    <b-row align-v="start">
       <b-col cols="1">
         <Drawer />
       </b-col>
@@ -30,6 +30,10 @@ export default {
   margin: 0;
   height: 100vh;
   overflow: hidden;
+}
+
+.col-1 {
+  padding: 0;
 }
 
 .col-11 {

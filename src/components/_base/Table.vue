@@ -17,14 +17,13 @@
     </b-row>
     <b-row>
       <div class="t-table">
-        <b-table head-variant="light" stacked="sm" :items="products" :fields="fields" bordered>
+        <b-table head-variant="light" :items="products" :fields="fields" bordered>
           <template v-slot:cell(actions)="row">
             <b-button
               size="sm"
               variant="warning"
               class="mr-1"
-              @click="row.toggleEdit"
-              v-b-modal.add-product
+              @click="openModalUpdate(products[row.index])"
             >
               <b-icon icon="pencil-square" variant="light"></b-icon>
             </b-button>
@@ -42,7 +41,7 @@
     </b-row>
 
     <b-modal ref="add-product-modal" centered hide-header hide-footer>
-      <h3>Add Product</h3>
+      <h3>{{headerModal}}</h3>
       <b-form-group>
         <b-row>
           <b-col sm="4">
@@ -72,14 +71,25 @@
 
         <b-row>
           <b-col sm="4">
+            <label for="product-category">Category</label>
+          </b-col>
+          <b-col sm="8">
+            <b-form-select v-model="form.category_id">
+              <option
+                v-for="(item, index) in category"
+                :key="index"
+                :value="item.category_id"
+              >{{item.category_id}}. {{item.category_name}}</option>
+            </b-form-select>
+          </b-col>
+        </b-row>
+
+        <b-row>
+          <b-col sm="4">
             <label for="product-status">Product Status</label>
           </b-col>
           <b-col sm="8">
-            <b-form-input
-              id="product-status"
-              placeholder="Rp. xxx.xxx,-"
-              v-model="form.product_status"
-            ></b-form-input>
+            <b-form-input id="product-status" placeholder="1" v-model="form.product_status"></b-form-input>
           </b-col>
         </b-row>
         <b-row text-center>
@@ -92,8 +102,17 @@
               class="mt-3"
               variant="success"
               block
+              v-show="!isUpdate"
               @click="addProduct()"
             >Add Product</b-button>
+            <b-button
+              type="button"
+              class="mt-3"
+              variant="success"
+              block
+              v-show="isUpdate"
+              @click="updateProduct()"
+            >Update Product</b-button>
           </b-col>
         </b-row>
       </b-form-group>
@@ -122,10 +141,13 @@ export default {
   name: 'Table',
   data() {
     return {
+      isUpdate: false,
+      headerModal: '',
       form: {
         product_name: '',
         product_price: '',
-        product_status: 1
+        category_id: '',
+        product_status: ''
       },
       fields: [
         {
@@ -160,11 +182,13 @@ export default {
       limit: 9,
       sort: 'product_id',
       products: [],
+      category: [],
       product_id: ''
     }
   },
   created() {
     this.getProduct()
+    this.getCategory()
   },
   methods: {
     getProduct() {
@@ -174,7 +198,18 @@ export default {
         )
         .then((res) => {
           this.products = res.data.data
-          return this.products
+          console.log(this.products)
+        })
+        .catch((err) => {
+          return console.log(err)
+        })
+    },
+    getCategory() {
+      axios
+        .get('http://127.0.0.1:3000/category')
+        .then((res) => {
+          this.category = res.data.data
+          console.log(this.category)
         })
         .catch((err) => {
           return console.log(err)
@@ -184,21 +219,23 @@ export default {
       axios
         .post('http://127.0.0.1:3000/product', this.form)
         .then((res) => {
-          console.log(res.data.data)
+          this.$refs['add-product-modal'].hide()
           this.getProduct()
         })
         .catch((error) => {
           console.log(error)
         })
     },
-    updateProduct(data) {
-      this.form = {
-        product_name: data.product_name,
-        product_price: data.product_price,
-        product_status: data.product_status
-      }
-      this.isUpdate = true
-      this.product_id = data.product_id
+    updateProduct() {
+      axios
+        .patch(`http://127.0.0.1:3000/product/${this.product_id}`, this.form)
+        .then((res) => {
+          this.$refs['add-product-modal'].hide()
+          this.getProduct()
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     },
     deleteProduct(id) {
       axios
@@ -213,9 +250,30 @@ export default {
     },
     openModal() {
       this.$refs['add-product-modal'].show()
+      this.isUpdate = false
+      this.headerModal = 'Add Product'
+      this.form = {
+        product_name: '',
+        product_price: '',
+        category_id: '',
+        product_status: ''
+      }
     },
     closeModal() {
       this.$refs['add-product-modal'].hide()
+    },
+    openModalUpdate(data) {
+      this.$refs['add-product-modal'].show()
+      this.isUpdate = true
+      this.headerModal = 'Update Product'
+      console.log(data)
+      this.form = {
+        product_name: data.product_name,
+        product_price: data.product_price,
+        category_id: data.category_id,
+        product_status: data.product_status
+      }
+      this.product_id = data.product_id
     }
   }
 }

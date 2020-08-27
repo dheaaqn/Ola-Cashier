@@ -48,7 +48,7 @@ p span {
 }
 
 .scrollable {
-  height: 50vh;
+  height: 62vh;
   overflow-y: scroll;
   overflow-x: hidden;
 }
