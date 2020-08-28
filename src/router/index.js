@@ -17,9 +17,9 @@ const routes = [
     component: Product
   },
   {
-    path: '/lifecycle',
-    name: 'Lifecycle',
-    component: () => import('../views/Lifecycle.vue')
+    path: '/history',
+    name: 'History',
+    component: () => import('../views/History.vue')
   }
 ]
 

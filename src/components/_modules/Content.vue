@@ -2,18 +2,12 @@
   <div class="c-container">
     <b-row>
       <b-col>
-        <p>
-          <span>Menu</span> Category
-        </p>
         <Tabs />
       </b-col>
     </b-row>
     <b-row>
       <b-col>
-        <p>
-          <span>Choose</span> Order
-        </p>
-        <div class="scrollable">
+        <div>
           <Card />
         </div>
       </b-col>
@@ -37,19 +31,5 @@ export default {
 <style scoped>
 .c-container {
   padding: 0px 56px;
-}
-
-p {
-  font-size: 2em;
-}
-
-p span {
-  font-weight: 600;
-}
-
-.scrollable {
-  height: 62vh;
-  overflow-y: scroll;
-  overflow-x: hidden;
 }
 </style>

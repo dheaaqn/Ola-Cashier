@@ -8,7 +8,7 @@
         <b-icon font-scale="1" icon="shop"></b-icon>
         <br />Home
       </b-nav-item>
-      <b-nav-item>
+      <b-nav-item to="/history">
         <b-icon font-scale="1" icon="pie-chart"></b-icon>
         <br />History
       </b-nav-item>

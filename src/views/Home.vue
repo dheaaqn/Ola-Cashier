@@ -7,7 +7,9 @@
       <b-col cols="8">
         <Content />
       </b-col>
-      <b-col cols="3"></b-col>
+      <b-col cols="3">
+        <Cart />
+      </b-col>
     </b-row>
   </div>
 </template>
@@ -16,12 +18,14 @@
 // @ is an alias to /src
 import Content from '../components/_modules/Content'
 import Drawer from '../components/_base/Drawer'
+import Cart from '../components/_base/Cart'
 
 export default {
   name: 'Home',
   components: {
     Content,
-    Drawer
+    Drawer,
+    Cart
   }
 }
 </script>
