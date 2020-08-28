@@ -8,7 +8,7 @@
     <b-row>
       <b-col>
         <div>
-          <Card />
+          <Card @dataCart="addToCart" />
         </div>
       </b-col>
     </b-row>
@@ -24,6 +24,11 @@ export default {
   components: {
     Tabs,
     Card
+  },
+  methods: {
+    addToCart(data) {
+      this.$emit('dataCart', data)
+    }
   }
 }
 </script>

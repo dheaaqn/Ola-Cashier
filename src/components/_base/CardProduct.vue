@@ -85,6 +85,7 @@ import axios from 'axios'
 
 export default {
   name: 'Card',
+  components: {},
   data() {
     return {
       page: 1,
@@ -103,11 +104,13 @@ export default {
     addToCart(data) {
       const setCart = {
         product_id: data.product_id,
+        product_name: data.product_name,
+        product_price: data.product_price,
         order_qty: 1
       }
 
       this.cart = [...this.cart, setCart]
-      console.log(this.cart)
+      this.$emit('dataCart', this.cart)
     },
     getProduct() {
       axios

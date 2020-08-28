@@ -5,17 +5,16 @@
         <Drawer />
       </b-col>
       <b-col cols="8">
-        <Content />
+        <Content @dataCart="addToCart" />
       </b-col>
       <b-col cols="3">
-        <Cart />
+        <Cart :dataCart="cart" />
       </b-col>
     </b-row>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
 import Content from '../components/_modules/Content'
 import Drawer from '../components/_base/Drawer'
 import Cart from '../components/_base/Cart'
@@ -26,6 +25,16 @@ export default {
     Content,
     Drawer,
     Cart
+  },
+  data() {
+    return {
+      cart: []
+    }
+  },
+  methods: {
+    addToCart(data) {
+      this.cart = data
+    }
   }
 }
 </script>
