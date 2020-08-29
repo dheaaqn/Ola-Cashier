@@ -129,8 +129,8 @@ export default {
           console.log(err)
         })
     },
-    cancellingOrder() {
-      this.dataCart = []
+    cancellingOrder(data) {
+      this.$emit('selectedItem', data)
     },
     removeCart(data) {
       return this.dataCart.splice(

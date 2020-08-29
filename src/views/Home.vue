@@ -5,10 +5,10 @@
         <Drawer />
       </b-col>
       <b-col cols="8">
-        <Content @dataCart="addToCart" />
+        <Content :dataCart="cart" @dataCarts="addToCart" />
       </b-col>
       <b-col cols="3">
-        <Cart :dataCart="cart" />
+        <Cart :dataCart="cart" @selectedItem="cancellingOrder" />
       </b-col>
     </b-row>
   </div>
@@ -21,6 +21,7 @@ import Cart from '../components/_base/Cart'
 
 export default {
   name: 'Home',
+  props: ['selectedItems'],
   components: {
     Content,
     Drawer,
@@ -34,6 +35,9 @@ export default {
   methods: {
     addToCart(data) {
       this.cart = data
+    },
+    cancellingOrder() {
+      this.cart = []
     }
   }
 }

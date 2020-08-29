@@ -85,6 +85,7 @@ import axios from 'axios'
 
 export default {
   name: 'Card',
+  props: { dataCart: Array },
   components: {},
   data() {
     return {
@@ -92,7 +93,7 @@ export default {
       limit: 8,
       sort: 'product_id',
       products: [],
-      cart: [],
+      // cart: [],
       sortBy: '',
       keyword: ''
     }
@@ -109,8 +110,8 @@ export default {
         order_qty: 1
       }
 
-      this.cart = [...this.cart, setCart]
-      this.$emit('dataCart', this.cart)
+      this.dataCart = [...this.dataCart, setCart]
+      this.$emit('dataCarts', this.dataCart)
     },
     getProduct() {
       axios
