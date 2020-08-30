@@ -17,7 +17,10 @@
         <div class="tabs-container">
           <b-row class="text-center" align-content="center">
             <b-col class="pb-2" v-for="(item, index) in category" :key="index">
-              <b-button variant="light">{{item.category_name}}</b-button>
+              <b-button
+                variant="light"
+                @click="sortByCategory(item.category_id)"
+              >{{item.category_name}}</b-button>
             </b-col>
           </b-row>
         </div>
@@ -126,6 +129,10 @@ export default {
         .catch((error) => {
           console.log(error)
         })
+    },
+    sortByCategory(id) {
+      console.log(id)
+      this.$emit('categoryId', id)
     },
     openModal() {
       this.$refs['add-category-modal'].show()

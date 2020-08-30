@@ -7,7 +7,16 @@
         </p>
       </b-col>
       <b-col cols="7">
-        <b-pagination :per-page="9" align="fill" size="sm" class="my-0"></b-pagination>
+        <b-pagination
+          v-model="page"
+          align="fill"
+          :total-rows="rows"
+          :per-page="limit"
+          first-text="First"
+          prev-text="Prev"
+          next-text="Next"
+          last-text="Last"
+        ></b-pagination>
       </b-col>
       <b-col cols="2">
         <b-button size="lg" variant="success" @click="openModal">
@@ -17,7 +26,15 @@
     </b-row>
     <b-row>
       <div class="t-table">
-        <b-table head-variant="light" :items="products" :fields="fields" bordered>
+        <b-table
+          show-empty
+          head-variant="light"
+          :items="products"
+          :fields="fields"
+          :current-page="page"
+          :per-page="limit"
+          bordered
+        >
           <template v-slot:cell(actions)="row">
             <b-button
               size="sm"
@@ -198,7 +215,6 @@ export default {
         )
         .then((res) => {
           this.products = res.data.data
-          console.log(this.products)
         })
         .catch((err) => {
           return console.log(err)
@@ -209,7 +225,6 @@ export default {
         .get('http://127.0.0.1:3000/category')
         .then((res) => {
           this.category = res.data.data
-          console.log(this.category)
         })
         .catch((err) => {
           return console.log(err)
@@ -241,7 +256,6 @@ export default {
       axios
         .delete(`http://127.0.0.1:3000/product/${id}`)
         .then((res) => {
-          console.log(this.products)
           this.getProduct()
         })
         .catch((error) => {
@@ -274,6 +288,11 @@ export default {
         product_status: data.product_status
       }
       this.product_id = data.product_id
+    }
+  },
+  computed: {
+    rows() {
+      return this.products.length
     }
   }
 }

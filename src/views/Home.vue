@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     addToCart(data) {
-      this.cart = data
+      this.cart = [...this.cart, data]
     },
     cancellingOrder() {
       this.cart = []

@@ -6,7 +6,7 @@
           <span class="cardTextBold">Choose</span> Order
         </p>
       </b-col>
-      <b-col cols="6">
+      <b-col cols="4">
         <b-row>
           <b-col style="text-align: right;">
             <b-input-group size="md" class="mb-2">
@@ -21,6 +21,19 @@
       <b-col cols="2">
         <b-row>
           <b-col style="text-align: right;">
+            <b-dropdown id="dropdown-buttons" text="Category  " variant="danger text-white">
+              <b-dropdown-item-button
+                v-for="(item, index) in category"
+                :key="index"
+                @click="getProductByCategory(item.category_id)"
+              >{{item.category_name}}</b-dropdown-item-button>
+            </b-dropdown>
+          </b-col>
+        </b-row>
+      </b-col>
+      <b-col cols="2">
+        <b-row>
+          <b-col style="text-align: right;">
             <b-dropdown id="dropdown-buttons" text="Sort By  " variant="danger text-white">
               <b-dropdown-item-button @click="sortByName">By Product Name</b-dropdown-item-button>
               <b-dropdown-item-button @click="sortByPrice">By Product Price</b-dropdown-item-button>
@@ -28,6 +41,21 @@
             </b-dropdown>
           </b-col>
         </b-row>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col cols="12" class="p-container">
+        <b-pagination
+          v-model="page"
+          v-show="pagination"
+          align="fill"
+          :total-rows="totalData"
+          :per-page="limit"
+          first-text="First"
+          prev-text="Prev"
+          next-text="Next"
+          last-text="Last"
+        ></b-pagination>
       </b-col>
     </b-row>
     <b-row class="scrollable">
@@ -73,8 +101,12 @@
   font-weight: 600;
 }
 
+.p-container .pagination {
+  padding: 0;
+}
+
 .scrollable {
-  height: 50vh;
+  height: 72vh;
   overflow-y: scroll;
   overflow-x: hidden;
 }
@@ -93,15 +125,29 @@ export default {
       limit: 8,
       sort: 'product_id',
       products: [],
-      // cart: [],
+      category: [],
       sortBy: '',
-      keyword: ''
+      keyword: '',
+      totalData: 0,
+      pagination: false
     }
   },
   created() {
     this.getProduct()
+    this.getCategory()
   },
   methods: {
+    getCategory() {
+      axios
+        .get('http://127.0.0.1:3000/category')
+        .then((res) => {
+          this.category = res.data.data
+          this.pagination = true
+        })
+        .catch((err) => {
+          return console.log(err)
+        })
+    },
     addToCart(data) {
       const setCart = {
         product_id: data.product_id,
@@ -109,15 +155,25 @@ export default {
         product_price: data.product_price,
         order_qty: 1
       }
-
-      this.dataCart = [...this.dataCart, setCart]
-      this.$emit('dataCarts', this.dataCart)
+      this.$emit('dataCarts', setCart)
     },
     getProduct() {
       axios
         .get(
           `http://127.0.0.1:3000/product?sort=${this.sort}&page=${this.page}&limit=${this.limit}`
         )
+        .then((res) => {
+          this.products = res.data.data
+          this.totalData = res.data.pagination.totalData
+          this.pagination = true
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    getProductByCategory(id) {
+      axios
+        .get(`http://127.0.0.1:3000/product/bycategory/${id}`)
         .then((res) => {
           this.products = res.data.data
         })

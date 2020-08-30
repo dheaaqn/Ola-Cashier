@@ -28,8 +28,6 @@ export default {
 .bv-example-row {
   padding: 0;
   margin: 0;
-  height: 100vh;
-  overflow: hidden;
 }
 
 .col-1 {
