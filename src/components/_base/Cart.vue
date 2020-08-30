@@ -58,11 +58,17 @@
             <b-button variant="warning" @click="cancellingOrder(dataCart)">Cancel Order</b-button>
           </b-col>
           <b-col cols="6">
-            <b-button variant="danger" @click="postOrder(dataCart)">Checkout Order</b-button>
+            <b-button
+              variant="danger"
+              v-b-modal.modalCheckout
+              @click="postOrder(dataCart)"
+            >Checkout Order</b-button>
           </b-col>
         </b-row>
       </b-col>
     </b-row>
+
+    <b-modal id="modalCheckout" centered>Hello From My Modal!</b-modal>
   </div>
 </template>
 
@@ -94,8 +100,9 @@ export default {
   props: ['dataCart'],
   data() {
     return {
-      setOrderData: [],
-      order: []
+      setDataOrder: {},
+      invoice: null,
+      cashier: 'Aku Sendiri'
     }
   },
   methods: {
@@ -118,12 +125,15 @@ export default {
             }
           ]
         }
-        this.setOrderData = [...this.setOrderData, orderData]
+        this.setDataOrder = orderData
       }
       axios
-        .post('http://127.0.0.1:3000/order', this.setOrderData)
+        .post('http://127.0.0.1:3000/order', this.setDataOrder)
         .then((res) => {
+          this.$emit('selectedItem', data)
+          this.invoice = res.data.data.history_invoice
           console.log(res)
+          console.log(this.invoice)
         })
         .catch((err) => {
           console.log(err)

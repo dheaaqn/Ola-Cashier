@@ -51,6 +51,7 @@
           align="fill"
           :total-rows="totalData"
           :per-page="limit"
+          @change="pageChange"
           first-text="First"
           prev-text="Prev"
           next-text="Next"
@@ -137,6 +138,11 @@ export default {
     this.getCategory()
   },
   methods: {
+    pageChange(numberPage) {
+      this.$router.push(`?page=${numberPage}`)
+      this.page = numberPage
+      this.getProduct()
+    },
     getCategory() {
       axios
         .get('http://127.0.0.1:3000/category')

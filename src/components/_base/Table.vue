@@ -10,8 +10,9 @@
         <b-pagination
           v-model="page"
           align="fill"
-          :total-rows="rows"
+          :total-rows="totalData"
           :per-page="limit"
+          aria-controls="table"
           first-text="First"
           prev-text="Prev"
           next-text="Next"
@@ -27,12 +28,13 @@
     <b-row>
       <div class="t-table">
         <b-table
-          show-empty
+          id="table"
           head-variant="light"
           :items="products"
           :fields="fields"
           :current-page="page"
           :per-page="limit"
+          ref="table"
           bordered
         >
           <template v-slot:cell(actions)="row">
@@ -197,6 +199,7 @@ export default {
       ],
       page: 1,
       limit: 9,
+      totalData: null,
       sort: 'product_id',
       products: [],
       category: [],
@@ -211,14 +214,21 @@ export default {
     getProduct() {
       axios
         .get(
-          `http://127.0.0.1:3000/product?sort=${this.sort}&page=${this.page}&limit=${this.limit}`
+          `http://127.0.0.1:3000/product?sort=${this.sort}&page=${this.page}&limit=`
         )
         .then((res) => {
+          this.totalData = res.data.pagination.totalData
           this.products = res.data.data
+          console.log(this.products)
         })
         .catch((err) => {
           return console.log(err)
         })
+    },
+    pageChange(numberPage) {
+      this.page = numberPage
+      this.getProduct()
+      this.$refs.table.refresh()
     },
     getCategory() {
       axios
@@ -288,11 +298,6 @@ export default {
         product_status: data.product_status
       }
       this.product_id = data.product_id
-    }
-  },
-  computed: {
-    rows() {
-      return this.products.length
     }
   }
 }

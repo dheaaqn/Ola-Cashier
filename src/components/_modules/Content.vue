@@ -15,6 +15,7 @@ import Card from '../_base/CardProduct'
 
 export default {
   name: 'Content',
+  props: ['dataCart'],
   components: {
     Card
   },
