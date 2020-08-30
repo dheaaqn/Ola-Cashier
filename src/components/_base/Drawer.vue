@@ -64,6 +64,10 @@ export default {}
   color: white;
 }
 
+.navbar-brand {
+  padding-top: 35px;
+}
+
 .colored-text {
   background-color: #eb3349;
   background-image: linear-gradient(
