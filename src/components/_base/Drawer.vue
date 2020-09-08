@@ -16,12 +16,22 @@
         <b-icon font-scale="1" icon="plus"></b-icon>
         <br />Add Product
       </b-nav-item>
+      <b-nav-item @click="handleLogout">
+        <b-icon font-scale="1" icon="box-arrow-in-left"></b-icon>
+        <br />Logout
+      </b-nav-item>
     </b-nav>
   </div>
 </template>
 
 <script>
-export default {}
+import { mapActions } from 'vuex'
+export default {
+  name: 'Drawer',
+  methods: {
+    ...mapActions({ handleLogout: 'logout' })
+  }
+}
 </script>
 
 <style scoped>

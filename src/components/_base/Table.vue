@@ -14,8 +14,6 @@
           :per-page="limit"
           aria-controls="table"
           first-text="First"
-          prev-text="Prev"
-          next-text="Next"
           last-text="Last"
         ></b-pagination>
       </b-col>
@@ -245,6 +243,7 @@ export default {
         .post('http://127.0.0.1:3000/product', this.form)
         .then((res) => {
           this.$refs['add-product-modal'].hide()
+          console.log(res)
           this.getProduct()
         })
         .catch((error) => {

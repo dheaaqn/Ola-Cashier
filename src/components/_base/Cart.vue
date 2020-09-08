@@ -68,7 +68,7 @@
       </b-col>
     </b-row>
 
-    <b-modal id="modalCheckout" centered>Hello From My Modal!</b-modal>
+    <b-modal id="modalCheckout" centered>receipt goes here</b-modal>
   </div>
 </template>
 

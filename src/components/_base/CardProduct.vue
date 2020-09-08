@@ -53,8 +53,6 @@
           :per-page="limit"
           @change="pageChange"
           first-text="First"
-          prev-text="Prev"
-          next-text="Next"
           last-text="Last"
         ></b-pagination>
       </b-col>
