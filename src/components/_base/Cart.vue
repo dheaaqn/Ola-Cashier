@@ -58,11 +58,7 @@
             <b-button variant="warning" @click="cancellingOrder(dataCart)">Cancel Order</b-button>
           </b-col>
           <b-col cols="6">
-            <b-button
-              variant="danger"
-              v-b-modal.modalCheckout
-              @click="postOrder(dataCart)"
-            >Checkout Order</b-button>
+            <b-button variant="danger" v-b-modal.modalCheckout @click="postOrder(dataCart)">Checkout</b-button>
           </b-col>
         </b-row>
       </b-col>
