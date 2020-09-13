@@ -62,7 +62,7 @@
         <b-card tag="article" style="max-width: 12rem; padding: 0;" class="mb-2 text-center">
           <b-img
             center
-            src="https://picsum.photos/600/300/?image=25"
+            :src="'http://127.0.0.1:3000/' + item.product_image"
             rounded="circle"
             alt="product-image"
             style="width: 100px; height: 100px; object-fit: cover;"
@@ -122,11 +122,9 @@ export default {
   data() {
     return {
       page: 1,
-      limit: 8,
       // sort: 'product_id',
       // products: [],
       category: [],
-      sortBy: '',
       keyword: '',
       totalData: 0,
       pagination: false
@@ -137,12 +135,12 @@ export default {
     this.getCategory()
   },
   methods: {
-    ...mapActions(['getProducts']),
-    ...mapMutations(['setSort']),
+    ...mapActions(['getProducts', 'searchProducts']),
+    ...mapMutations(['setSort', 'setSearch']),
     pageChange(numberPage) {
       this.$router.push(`?page=${numberPage}`)
       this.page = numberPage
-      this.getProduct()
+      this.getProducts()
     },
     getCategory() {
       axios
@@ -187,19 +185,13 @@ export default {
       this.getProducts()
     },
     searchProduct() {
-      axios
-        .get(`http://127.0.0.1:3000/product?search=${this.keyword}`)
-        .then((res) => {
-          this.products = res.data.data
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+      this.searchProducts(this.keyword)
     }
   },
   computed: {
     ...mapGetters({
-      products: 'getProduct'
+      products: 'getProduct',
+      limit: 'getLimit'
     })
   }
 }
