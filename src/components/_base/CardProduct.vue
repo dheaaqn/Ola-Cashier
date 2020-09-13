@@ -113,6 +113,7 @@
 
 <script>
 import axios from 'axios'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 
 export default {
   name: 'Card',
@@ -122,8 +123,8 @@ export default {
     return {
       page: 1,
       limit: 8,
-      sort: 'product_id',
-      products: [],
+      // sort: 'product_id',
+      // products: [],
       category: [],
       sortBy: '',
       keyword: '',
@@ -132,10 +133,12 @@ export default {
     }
   },
   created() {
-    this.getProduct()
+    this.getProducts()
     this.getCategory()
   },
   methods: {
+    ...mapActions(['getProducts']),
+    ...mapMutations(['setSort']),
     pageChange(numberPage) {
       this.$router.push(`?page=${numberPage}`)
       this.page = numberPage
@@ -161,20 +164,6 @@ export default {
       }
       this.$emit('dataCarts', setCart)
     },
-    getProduct() {
-      axios
-        .get(
-          `http://127.0.0.1:3000/product?sort=${this.sort}&page=${this.page}&limit=${this.limit}`
-        )
-        .then((res) => {
-          this.products = res.data.data
-          this.totalData = res.data.pagination.totalData
-          this.pagination = true
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    },
     getProductByCategory(id) {
       axios
         .get(`http://127.0.0.1:3000/product/bycategory/${id}`)
@@ -186,16 +175,16 @@ export default {
         })
     },
     sortByName() {
-      this.sort = 'product_name'
-      this.getProduct()
+      this.setSort('product_name')
+      this.getProducts()
     },
     sortByPrice() {
-      this.sort = 'product_price'
-      this.getProduct()
+      this.setSort('product_price')
+      this.getProducts()
     },
     sortByDate() {
-      this.sort = 'product_created_at'
-      this.getProduct()
+      this.setSort('product_created_at')
+      this.getProducts()
     },
     searchProduct() {
       axios
@@ -207,6 +196,11 @@ export default {
           console.log(err)
         })
     }
+  },
+  computed: {
+    ...mapGetters({
+      products: 'getProduct'
+    })
   }
 }
 </script>

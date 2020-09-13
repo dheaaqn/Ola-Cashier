@@ -2,7 +2,9 @@
   <div class="c-container">
     <b-row>
       <b-col cols="3">
-        <p><span>Product</span> Table</p>
+        <p>
+          <span>Product</span> Table
+        </p>
       </b-col>
       <b-col cols="7">
         <b-pagination
@@ -17,11 +19,7 @@
       </b-col>
       <b-col cols="2">
         <b-button size="lg" variant="success" @click="openModal">
-          <b-icon
-            icon="plus-square"
-            variant="light"
-            aria-hidden="true"
-          ></b-icon>
+          <b-icon icon="plus-square" variant="light" aria-hidden="true"></b-icon>
         </b-button>
       </b-col>
     </b-row>
@@ -59,7 +57,7 @@
       </div>
     </b-row>
 
-    <b-modal ref="add-product-modal" centered hide-header hide-footer>
+    <b-modal id="add-product-modal" ref="add-product-modal" centered hide-header hide-footer>
       <h3>{{ headerModal }}</h3>
       <b-form-group>
         <b-row>
@@ -98,8 +96,7 @@
                 v-for="(item, index) in category"
                 :key="index"
                 :value="item.category_id"
-                >{{ item.category_id }}. {{ item.category_name }}</option
-              >
+              >{{ item.category_id }}. {{ item.category_name }}</option>
             </b-form-select>
           </b-col>
         </b-row>
@@ -109,11 +106,7 @@
             <label for="product-status">Product Status</label>
           </b-col>
           <b-col sm="8">
-            <b-form-input
-              id="product-status"
-              placeholder="1"
-              v-model="form.product_status"
-            ></b-form-input>
+            <b-form-input id="product-status" placeholder="1" v-model="form.product_status"></b-form-input>
           </b-col>
         </b-row>
 
@@ -122,24 +115,13 @@
             <label>Product Image</label>
           </b-col>
           <b-col sm="8">
-            <input
-              type="file"
-              @change="handleFile"
-              placeholder="input image here"
-            />
+            <input type="file" @change="handleFile" placeholder="input image here" />
           </b-col>
         </b-row>
 
         <b-row text-center>
           <b-col cols="6">
-            <b-button
-              type="submit"
-              class="mt-3"
-              variant="danger"
-              block
-              @click="closeModal"
-              >Cancel</b-button
-            >
+            <b-button type="submit" class="mt-3" variant="danger" block @click="closeModal">Cancel</b-button>
           </b-col>
           <b-col cols="6">
             <b-button
@@ -149,8 +131,7 @@
               block
               v-show="!isUpdate"
               @click="addProduct"
-              >Add Product</b-button
-            >
+            >Add Product</b-button>
             <b-button
               type="button"
               class="mt-3"
@@ -158,8 +139,7 @@
               block
               v-show="isUpdate"
               @click="updateProduct()"
-              >Update Product</b-button
-            >
+            >Update Product</b-button>
           </b-col>
         </b-row>
       </b-form-group>
@@ -183,7 +163,7 @@ p span {
 
 <script>
 import axios from 'axios'
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'Table',
@@ -230,46 +210,33 @@ export default {
       page: 1,
       limit: 9,
       totalData: null,
-      sort: 'product_id',
-      products: [],
+      // sort: 'product_id',
+      // products: [],
+      product_id: '',
       category: []
-      // product_id: ''
     }
   },
   created() {
-    this.getProduct()
+    this.getProducts()
     this.getCategory()
   },
   methods: {
-    ...mapActions(['addProducts', 'updateProducts', 'deleteProducts']),
+    ...mapActions([
+      'addProducts',
+      'updateProducts',
+      'deleteProducts',
+      'getProducts'
+    ]),
     handleFile(event) {
       this.form.product_image = event.target.files[0]
-    },
-    getProduct() {
-      axios
-        .get(
-          `http://127.0.0.1:3000/product?sort=${this.sort}&page=${this.page}&limit=`
-        )
-        .then(res => {
-          this.totalData = res.data.pagination.totalData
-          this.products = res.data.data
-        })
-        .catch(err => {
-          return console.log(err)
-        })
-    },
-    pageChange(numberPage) {
-      this.page = numberPage
-      this.getProduct()
-      this.$refs.table.refresh()
     },
     getCategory() {
       axios
         .get('http://127.0.0.1:3000/category')
-        .then(res => {
+        .then((res) => {
           this.category = res.data.data
         })
-        .catch(err => {
+        .catch((err) => {
           return console.log(err)
         })
     },
@@ -281,30 +248,21 @@ export default {
       data.append('category_id', this.form.category_id)
       data.append('product_image', this.form.product_image)
       this.addProducts(data)
+      this.$bvModal.hide('add-product-modal')
+      this.getProducts()
     },
     updateProduct() {
-      // this.updateProducts()
-      // this.updateProducts(this.products.product_id)
-      // axios
-      //   .patch(`http://127.0.0.1:3000/product/${this.product_id}`, this.form)
-      //   .then((res) => {
-      //     this.$refs['add-product-modal'].hide()
-      //     this.getProduct()
-      //   })
-      //   .catch((error) => {
-      //     console.log(error)
-      //   })
+      const setData = {
+        product_id: this.product_id,
+        form: this.form
+      }
+      this.updateProducts(setData)
+      this.$bvModal.hide('add-product-modal')
+      this.getProducts()
     },
     deleteProduct(id) {
       this.deleteProducts(id)
-      // axios
-      //   .delete(`http://127.0.0.1:3000/product/${id}`)
-      //   .then(res => {
-      //     this.getProduct()
-      //   })
-      //   .catch(error => {
-      //     console.log(error)
-      //   })
+      this.getProducts()
     },
     openModal() {
       this.$refs['add-product-modal'].show()
@@ -324,14 +282,19 @@ export default {
       this.$refs['add-product-modal'].show()
       this.isUpdate = true
       this.headerModal = 'Update Product'
-      // this.form = {
-      //   product_name: data.product_name,
-      //   product_price: data.product_price,
-      //   category_id: data.category_id,
-      //   product_status: data.product_status
-      // }
-      // this.product_id = data.product_id
+      this.form = {
+        product_name: data.product_name,
+        product_price: data.product_price,
+        category_id: data.category_id,
+        product_status: data.product_status
+      }
+      this.product_id = data.product_id
     }
+  },
+  computed: {
+    ...mapGetters({
+      products: 'getProduct'
+    })
   }
 }
 </script>

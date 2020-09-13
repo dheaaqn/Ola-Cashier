@@ -2,14 +2,32 @@ import axios from 'axios'
 
 export default {
   state: {
-    product_id: ''
+    products: [],
+    page: 1,
+    sort: 'product_id'
   },
   mutations: {
-    setProductId(state, payload) {
-      state.product_id = payload
+    setProducts(state, payload) {
+      state.products = payload.data
+    },
+    setSort(state, payload) {
+      state.sort = payload
     }
   },
   actions: {
+    getProducts(context, payload) {
+      axios
+        .get(
+          `http://127.0.0.1:3000/product?sort=${context.state.sort}&page=${context.state.page}&limit=`
+        )
+        .then(response => {
+          context.commit('setProducts', response.data)
+          console.log('ya tampil')
+        })
+        .catch(error => {
+          return console.log(error.response)
+        })
+    },
     addProducts(context, payload) {
       return new Promise((resolve, reject) => {
         axios
@@ -23,31 +41,39 @@ export default {
       })
     },
     updateProducts(context, payload) {
-      // console.log(payload.product_id)
-      // axios
-      //   .patch(
-      //     `http://127.0.0.1:3000/product/${context.state.product_id}`,
-      //     payload
-      //   )
-      //   .then(res => {
-      //     console.log(payload)
-      //     // this.$refs['add-product-modal'].hide()
-      //     // this.getProduct()
-      //   })
-      //   .catch(error => {
-      //     console.log(error)
-      //   })
+      return new Promise((resolve, reject) => {
+        axios
+          .patch(
+            `http://127.0.0.1:3000/product/${payload.product_id}`,
+            payload.form
+          )
+          .then(response => {
+            resolve(response.data.data)
+          })
+          .catch(error => {
+            reject(error.response)
+          })
+      })
     },
     deleteProducts(context, payload) {
-      axios
-        .delete(`http://127.0.0.1:3000/product/${payload}`)
-        .then(res => {
-          console.log('success')
-        })
-        .catch(error => {
-          console.log(error)
-        })
+      return new Promise((resolve, reject) => {
+        axios
+          .delete(`http://127.0.0.1:3000/product/${payload}`)
+          .then(response => {
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error.response)
+          })
+      })
     }
   },
-  getters: {}
+  getters: {
+    getProduct(state) {
+      return state.products
+    },
+    getSort(state) {
+      return state.sort
+    }
+  }
 }

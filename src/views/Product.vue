@@ -37,5 +37,6 @@ export default {
 .col-11 {
   padding: 0px 56px;
   background-color: #fafafa;
+  height: 100vh;
 }
 </style>
