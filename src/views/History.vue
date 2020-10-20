@@ -7,53 +7,58 @@
       <b-col cols="11">
         <b-row class="card-container">
           <b-col>
-            <b-card title="Today's Income" style="background-color: lightpink;">
-              <b-card-text>
-                Rp. 1.000.000
-              </b-card-text>
+            <b-card title="Today's Income">
+              <b-card-text>Rp. {{todaysincome}}</b-card-text>
+              <p style="font-size: 16px">+3% yesterday</p>
             </b-card>
           </b-col>
           <b-col>
-            <b-card title="Orders" style="background-color: darkseagreen;">
-              <b-card-text>
-                Rp. 1.000.000
-              </b-card-text>
+            <b-card title="Orders">
+              <b-card-text>60</b-card-text>
+              <p style="font-size: 16px">+2% last week</p>
             </b-card>
           </b-col>
           <b-col>
-            <b-card
-              title="This Year's Income"
-              style="background-color: cornflowerblue;"
-            >
-              <b-card-text>
-                Rp. 500.000.000.000
-              </b-card-text>
+            <b-card title="This Year's Income">
+              <b-card-text>Rp. 2413000</b-card-text>
+              <p style="font-size: 16px">+12% last year</p>
             </b-card>
           </b-col>
         </b-row>
         <b-row class="revenue-container">
           <b-col>
             <b-row>
-              <b-col cols="10"
-                ><p><span>Revenue</span></p></b-col
-              >
+              <b-col cols="10">
+                <p>
+                  <span>Revenue</span>
+                </p>
+              </b-col>
               <b-col cols="2" align-self="end">
                 <b-dropdown
                   id="dropdown-buttons"
-                  text="View By  "
+                  text="View By Month "
                   variant="danger text-white"
                   block
                 >
-                  <b-dropdown-item-button>Today</b-dropdown-item-button>
-                  <b-dropdown-item-button>Last Week</b-dropdown-item-button>
-                  <b-dropdown-item-button>Last Month</b-dropdown-item-button>
+                  <b-dropdown-item-button>January</b-dropdown-item-button>
+                  <b-dropdown-item-button>February</b-dropdown-item-button>
+                  <b-dropdown-item-button>March</b-dropdown-item-button>
+                  <b-dropdown-item-button>April</b-dropdown-item-button>
+                  <b-dropdown-item-button>May</b-dropdown-item-button>
+                  <b-dropdown-item-button>June</b-dropdown-item-button>
+                  <b-dropdown-item-button>July</b-dropdown-item-button>
+                  <b-dropdown-item-button>August</b-dropdown-item-button>
+                  <b-dropdown-item-button>September</b-dropdown-item-button>
+                  <b-dropdown-item-button>Oct</b-dropdown-item-button>
+                  <b-dropdown-item-button>Nov</b-dropdown-item-button>
+                  <b-dropdown-item-button>Des</b-dropdown-item-button>
                 </b-dropdown>
-              </b-col></b-row
-            >
+              </b-col>
+            </b-row>
             <b-row>
               <b-col>
                 <line-chart
-                  :data="{ '2017-05-13': 2, '2017-05-14': 5 }"
+                  :data="{'2017-05-13': 2, '2017-05-14': 5, '2017-05-15': 8, '2017-05-16': 7, '2017-05-17':5, '2017-05-18': 9}"
                 ></line-chart>
               </b-col>
             </b-row>
@@ -63,7 +68,9 @@
           <b-col>
             <b-row>
               <b-col>
-                <p><span>Recent</span> Order</p>
+                <p>
+                  <span>Recent</span> Order
+                </p>
               </b-col>
             </b-row>
             <b-row>
@@ -99,7 +106,7 @@
                   bordered
                   head-variant="light"
                   table-variant="light"
-                  :items="history"
+                  :items="recentorder"
                   :per-page="perPage"
                   :current-page="currentPage"
                   style="text-align: center"
@@ -145,9 +152,9 @@ p span {
 </style>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 // @ is an alias to /src
 import Drawer from '../components/_base/Drawer'
-import axios from 'axios'
 
 export default {
   name: 'Home',
@@ -158,24 +165,23 @@ export default {
     return {
       perPage: 5,
       currentPage: 1,
-      history: []
+      months: '',
+      limit: 8,
+      totalData: ''
     }
   },
   created() {
-    this.getHistory()
+    this.getTodaysIncome()
+    this.getRecentOrder()
   },
   methods: {
-    getHistory() {
-      axios
-        .get('http://127.0.0.1:3000/history')
-        .then(res => {
-          this.history = res.data.data
-          console.log(res)
-        })
-        .catch(err => {
-          return console.log(err)
-        })
-    }
+    ...mapActions(['getTodaysIncome', 'getRecentOrder'])
+  },
+  computed: {
+    ...mapGetters({
+      todaysincome: 'getTodayIncome',
+      recentorder: 'getRecent'
+    })
   }
 }
 </script>

@@ -26,6 +26,7 @@ export default {
 
 <style scoped>
 .bv-example-row {
+  overflow: hidden;
   padding: 0;
   margin: 0;
 }
@@ -35,8 +36,9 @@ export default {
 }
 
 .col-11 {
-  padding: 0px 56px;
+  padding: 30px 60px;
   background-color: #fafafa;
   height: 100vh;
+  overflow-y: auto;
 }
 </style>

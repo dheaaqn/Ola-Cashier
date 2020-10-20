@@ -12,9 +12,9 @@
         <b-icon font-scale="1" icon="pie-chart"></b-icon>
         <br />History
       </b-nav-item>
-      <b-nav-item to="/product">
+      <b-nav-item to="/product" v-show="user.user_role === 1">
         <b-icon font-scale="1" icon="plus"></b-icon>
-        <br />Add Product
+        <br />Manage Product
       </b-nav-item>
       <b-nav-item @click="handleLogout">
         <b-icon font-scale="1" icon="box-arrow-in-left"></b-icon>
@@ -25,18 +25,20 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'Drawer',
   methods: {
     ...mapActions({ handleLogout: 'logout' })
+  },
+  computed: {
+    ...mapGetters({ user: 'getUser' })
   }
 }
 </script>
 
 <style scoped>
 .drawer-container {
-  /* width: 10%; */
   height: 100vh;
   text-align: center;
   background-color: #ffffff;

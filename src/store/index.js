@@ -4,18 +4,20 @@ import createPersistedState from 'vuex-persistedstate'
 
 import Auth from './modules/auth'
 import Product from './modules/product'
+import History from './modules/history'
+import Category from './modules/category'
+import Order from './modules/order'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {
     Auth,
-    Product
+    Product,
+    History,
+    Category,
+    Order
   },
-  state: {},
-  mutations: {},
-  actions: {},
-  getters: {},
   plugins: [
     createPersistedState({
       paths: ['Auth.user'],

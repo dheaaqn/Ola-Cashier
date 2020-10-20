@@ -10,7 +10,7 @@ export default {
   },
   mutations: {
     setProducts(state, payload) {
-      state.products = payload.data
+      state.products = payload
     },
     setSort(state, payload) {
       state.sort = payload
@@ -26,7 +26,7 @@ export default {
           `http://127.0.0.1:3000/product?sort=${context.state.sort}&page=${context.state.page}&limit=${context.state.limit}`
         )
         .then(response => {
-          context.commit('setProducts', response.data)
+          context.commit('setProducts', response.data.data)
         })
         .catch(error => {
           return console.log(error.response)
@@ -36,7 +36,7 @@ export default {
       axios
         .get(`http://127.0.0.1:3000/product?search=${payload}`)
         .then(response => {
-          context.commit('setProducts', response.data)
+          context.commit('setProducts', response.data.data)
         })
         .catch(error => {
           console.log(error.response)

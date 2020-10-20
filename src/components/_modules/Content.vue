@@ -3,7 +3,7 @@
     <b-row>
       <b-col>
         <div>
-          <Card :dataCart="dataCart" @dataCarts="addToCart" />
+          <Card />
         </div>
       </b-col>
     </b-row>
@@ -15,14 +15,8 @@ import Card from '../_base/CardProduct'
 
 export default {
   name: 'Content',
-  props: ['dataCart'],
   components: {
     Card
-  },
-  methods: {
-    addToCart(data) {
-      this.$emit('dataCarts', data)
-    }
   }
 }
 </script>

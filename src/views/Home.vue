@@ -5,10 +5,10 @@
         <Drawer />
       </b-col>
       <b-col cols="8">
-        <Content :dataCart="cart" @dataCarts="addToCart" />
+        <Content />
       </b-col>
       <b-col cols="3">
-        <Cart :dataCart="cart" @selectedItem="cancellingOrder" />
+        <Cart />
       </b-col>
     </b-row>
   </div>
@@ -28,18 +28,9 @@ export default {
     Cart
   },
   data() {
-    return {
-      cart: []
-    }
+    return {}
   },
-  methods: {
-    addToCart(data) {
-      this.cart = [...this.cart, data]
-    },
-    cancellingOrder() {
-      this.cart = []
-    }
-  }
+  methods: {}
 }
 </script>
 

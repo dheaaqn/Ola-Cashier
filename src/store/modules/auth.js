@@ -97,7 +97,7 @@ export default {
     isLogin(state) {
       return state.token !== null
     },
-    setUser(state) {
+    getUser(state) {
       return state.user
     }
   }
