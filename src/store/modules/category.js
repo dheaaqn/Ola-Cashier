@@ -5,14 +5,14 @@ export default {
     category: []
   },
   mutations: {
-    setCategory (state, payload) {
+    setCategory(state, payload) {
       state.category = payload
     }
   },
   actions: {
     getCategory(context, payload) {
       return new Promise((resolve, reject) => {
-        axios.get('http://127.0.0.1:3000/category').then(response => {
+        axios.get(`${process.env.VUE_APP_URL}/category`).then(response => {
           context.commit('setCategory', response.data.data)
         }).catch(error => {
           reject(error)
@@ -21,7 +21,7 @@ export default {
     },
     addCategories(context, payload) {
       return new Promise((resolve, reject) => {
-        axios.post('http://127.0.0.1:3000/category', payload).then((response) => {
+        axios.post(`${process.env.VUE_APP_URL}/category`, payload).then((response) => {
           resolve('setCategory', response.data.data)
         }).catch(error => {
           reject(error.response.data.message)
@@ -32,7 +32,7 @@ export default {
       return new Promise((resolve, reject) => {
         axios
           .patch(
-            `http://127.0.0.1:3000/category/${payload.category_id}`,
+            `${process.env.VUE_APP_URL}/category/${payload.category_id}`,
             payload.form
           )
           .then(response => {
@@ -45,7 +45,7 @@ export default {
     },
     deleteCategories(context, payload) {
       return new Promise((resolve, reject) => {
-        axios.delete(`http://127.0.0.1:3000/category/${payload}`).then((response) => {
+        axios.delete(`${process.env.VUE_APP_URL}/category/${payload}`).then((response) => {
           resolve(response)
         }).catch((error) => {
           reject(error)

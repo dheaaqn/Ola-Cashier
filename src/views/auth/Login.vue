@@ -41,75 +41,74 @@
 </template>
 
 <style scoped>
-.login-container {
-  height: 100vh;
-  overflow: hidden;
-  background: linear-gradient(115.61deg, #eb3349 -12.54%, #f45c43 85.47%);
-  /* display: grid; */
-}
+  .login-container {
+    height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(115.61deg, #eb3349 -12.54%, #f45c43 85.47%);
+  }
 
-.card {
-  padding: 4em;
-  border: transparent;
-  border-radius: 25px;
-  margin: 120px auto;
-  max-width: 30rem;
-}
+  .card {
+    padding: 4em;
+    border: transparent;
+    border-radius: 25px;
+    margin: 120px auto;
+    max-width: 30rem;
+  }
 
-.card-body {
-  padding: 0;
-}
+  .card-body {
+    padding: 0;
+  }
 
-.loginText {
-  font-size: 2em;
-}
+  .loginText {
+    font-size: 2em;
+  }
 
-.loginTextBold {
-  font-weight: 600;
-}
+  .loginTextBold {
+    font-weight: 600;
+  }
 
-.form-control {
-  border: transparent;
-  background-color: #f6f6f6;
-}
+  .form-control {
+    border: transparent;
+    background-color: #f6f6f6;
+  }
 
-.btn-primary {
-  border: transparent;
-  background-color: #eb3349;
-}
+  .btn-primary {
+    border: transparent;
+    background-color: #eb3349;
+  }
 </style>
 
 <script>
-import { mapActions } from 'vuex'
+  import { mapActions } from 'vuex'
 
-export default {
-  name: 'Login',
-  data() {
-    return {
-      form: {
-        user_email: '',
-        user_password: ''
+  export default {
+    name: 'Login',
+    data() {
+      return {
+        form: {
+          user_email: '',
+          user_password: ''
+        }
       }
-    }
-  },
-  computed: {},
-  methods: {
-    ...mapActions(['login']),
-    onSubmit() {
-      this.login(this.form)
-        .then(result => {
-          this.$router.push('/')
-        })
-        .catch(error => {
-          console.log(error)
-        })
     },
-    onReset() {
-      this.form = {
-        user_email: '',
-        user_password: ''
+    computed: {},
+    methods: {
+      ...mapActions(['login']),
+      onSubmit() {
+        this.login(this.form)
+          .then((result) => {
+            this.$router.push('/')
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+      },
+      onReset() {
+        this.form = {
+          user_email: '',
+          user_password: ''
+        }
       }
     }
   }
-}
 </script>

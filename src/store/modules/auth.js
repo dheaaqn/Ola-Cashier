@@ -20,7 +20,7 @@ export default {
     login(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .post('http://127.0.0.1:3000/users/login', payload)
+          .post(`${process.env.VUE_APP_URL}/users/login`, payload)
           .then(response => {
             context.commit('setUser', response.data.data)
             localStorage.setItem('token', response.data.data.token)
@@ -34,7 +34,7 @@ export default {
     register(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .post('http://127.0.0.1:3000/users/register', payload)
+          .post(`${process.env.VUE_APP_URL}/users/register`, payload)
           .then(response => {
             console.log(response)
             resolve(response)
@@ -52,21 +52,21 @@ export default {
     },
     interceptorRequest(context) {
       axios.interceptors.request.use(
-        function(config) {
+        function (config) {
           config.headers.Authorization = `Bearer ${context.state.token}`
           return config
         },
-        function(error) {
+        function (error) {
           return Promise.reject(error)
         }
       )
     },
     interceptorResponse(context) {
       axios.interceptors.response.use(
-        function(response) {
+        function (response) {
           return response
         },
-        function(error) {
+        function (error) {
           console.log(error.response)
           if (error.response.status === 403) {
             if (

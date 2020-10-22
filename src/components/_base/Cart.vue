@@ -12,7 +12,7 @@
         :key="index"
       >
         <b-img
-          :src="'http://127.0.0.1:3000/' + item.product_image"
+          :src="url + '/' + item.product_image"
           rounded
           class="mr-3"
         ></b-img>
@@ -105,7 +105,9 @@
           </p></b-col
         >
         <b-col md="4"
-          ><p class="price">Rp. {{ item.product_price }}</p></b-col
+          ><p class="price">
+            Rp. {{ item.product_price * item.order_qty }}
+          </p></b-col
         >
       </b-row>
       <b-row class="ppn">
@@ -194,7 +196,8 @@
     name: 'Cart',
     data() {
       return {
-        setOrder: []
+        setOrder: [],
+        url: process.env.VUE_APP_URL
       }
     },
     computed: {
@@ -283,13 +286,6 @@
       },
       increment(data) {
         data.order_qty += 1
-      },
-      makeToast(msg, title, variant) {
-        this.$bvToast.toast(msg, {
-          title: title,
-          variant: variant,
-          solid: true
-        })
       }
     }
   }

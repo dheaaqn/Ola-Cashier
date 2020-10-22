@@ -87,7 +87,7 @@
         >
           <b-img
             center
-            :src="'http://127.0.0.1:3000' + '/' + item.product_image"
+            :src="url + '/' + item.product_image"
             rounded="circle"
             alt="product-image"
             style="width: 100px; height: 100px; object-fit: cover"
@@ -148,7 +148,8 @@
         page: 1,
         keyword: '',
         totalData: 0,
-        pagination: false
+        pagination: false,
+        url: process.env.VUE_APP_URL
       }
     },
     created() {
@@ -176,7 +177,7 @@
       },
       getProductByCategory(id) {
         axios
-          .get(`http://127.0.0.1:3000/product/bycategory/${id}`)
+          .get(`${process.env.VUE_APP_URL}/product/bycategory/${id}`)
           .then((res) => {
             this.products = res.data.data
           })

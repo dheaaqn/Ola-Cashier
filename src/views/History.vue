@@ -7,26 +7,26 @@
       <b-col cols="11">
         <b-row class="card-container">
           <b-col>
-            <b-card title="Today's Income">
-              <b-card-text>Rp. {{todaysincome}}</b-card-text>
+            <b-card title="Today's Income" class="today">
+              <b-card-text>Rp. {{ today }}</b-card-text>
               <p style="font-size: 16px">+3% yesterday</p>
             </b-card>
           </b-col>
           <b-col>
-            <b-card title="Orders">
-              <b-card-text>60</b-card-text>
+            <b-card title="Orders" class="order">
+              <b-card-text>{{ orders }}</b-card-text>
               <p style="font-size: 16px">+2% last week</p>
             </b-card>
           </b-col>
           <b-col>
-            <b-card title="This Year's Income">
-              <b-card-text>Rp. 2413000</b-card-text>
+            <b-card title="This Year's Income" class="years">
+              <b-card-text>Rp. {{ year }}</b-card-text>
               <p style="font-size: 16px">+12% last year</p>
             </b-card>
           </b-col>
         </b-row>
         <b-row class="revenue-container">
-          <b-col>
+          <b-col class="card">
             <b-row>
               <b-col cols="10">
                 <p>
@@ -36,41 +36,27 @@
               <b-col cols="2" align-self="end">
                 <b-dropdown
                   id="dropdown-buttons"
-                  text="View By Month "
+                  text="View By "
                   variant="danger text-white"
                   block
                 >
-                  <b-dropdown-item-button>January</b-dropdown-item-button>
-                  <b-dropdown-item-button>February</b-dropdown-item-button>
-                  <b-dropdown-item-button>March</b-dropdown-item-button>
-                  <b-dropdown-item-button>April</b-dropdown-item-button>
-                  <b-dropdown-item-button>May</b-dropdown-item-button>
-                  <b-dropdown-item-button>June</b-dropdown-item-button>
-                  <b-dropdown-item-button>July</b-dropdown-item-button>
-                  <b-dropdown-item-button>August</b-dropdown-item-button>
-                  <b-dropdown-item-button>September</b-dropdown-item-button>
-                  <b-dropdown-item-button>Oct</b-dropdown-item-button>
-                  <b-dropdown-item-button>Nov</b-dropdown-item-button>
-                  <b-dropdown-item-button>Des</b-dropdown-item-button>
+                  <b-dropdown-item-button>This Month</b-dropdown-item-button>
+                  <b-dropdown-item-button>This Week</b-dropdown-item-button>
                 </b-dropdown>
               </b-col>
             </b-row>
             <b-row>
               <b-col>
-                <line-chart
-                  :data="{'2017-05-13': 2, '2017-05-14': 5, '2017-05-15': 8, '2017-05-16': 7, '2017-05-17':5, '2017-05-18': 9}"
-                ></line-chart>
+                <line-chart :data="datachart"></line-chart>
               </b-col>
             </b-row>
           </b-col>
         </b-row>
         <b-row class="table-container">
-          <b-col>
+          <b-col class="card">
             <b-row>
               <b-col>
-                <p>
-                  <span>Recent</span> Order
-                </p>
+                <p><span>Recent</span> Order</p>
               </b-col>
             </b-row>
             <b-row>
@@ -80,10 +66,6 @@
                   align="fill"
                   :total-rows="totalData"
                   :per-page="limit"
-                  first-text="First"
-                  prev-text="Prev"
-                  next-text="Next"
-                  last-text="Last"
                 ></b-pagination>
               </b-col>
               <b-col cols="2">
@@ -101,16 +83,26 @@
             </b-row>
             <b-row>
               <b-col cols="12">
-                <b-table
-                  id="historyTable"
-                  bordered
-                  head-variant="light"
-                  table-variant="light"
-                  :items="recentorder"
-                  :per-page="perPage"
-                  :current-page="currentPage"
-                  style="text-align: center"
-                ></b-table>
+                <table class="table table-responsive-sm">
+                  <thead>
+                    <tr>
+                      <th scope="col">INVOICE</th>
+                      <th scope="col">DATE</th>
+                      <th scope="col">ORDERS</th>
+                      <th scope="col">AMOUNT</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(item, index) in recentorder" :key="index">
+                      <td>#{{ item.history_invoice }}</td>
+                      <td>{{ item.history_created_at }}</td>
+                      <td>
+                        {{ item.orders.map((x) => x.product_name).join(', ') }}
+                      </td>
+                      <td>Rp {{ item.history_subtotal }}</td>
+                    </tr>
+                  </tbody>
+                </table>
               </b-col>
             </b-row>
           </b-col>
@@ -121,67 +113,107 @@
 </template>
 
 <style scoped>
-.col-11 {
-  padding: 35px 56px;
-  height: 100vh;
-  overflow-y: scroll;
-  overflow-x: hidden;
-}
+  .col-11 {
+    padding: 35px 56px;
+    height: 100vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
 
-.bv-example-row {
-  margin: 0;
-  background-color: #fafafa;
-  overflow: hidden;
-}
+  .bv-example-row {
+    margin: 0;
+    background-color: #fafafa;
+    overflow: hidden;
+  }
 
-.col-1 {
-  padding: 0;
-}
+  .col-1 {
+    padding: 0;
+  }
 
-p {
-  font-size: 2em;
-}
+  p {
+    font-size: 2em;
+  }
 
-p span {
-  font-weight: 600;
-}
+  p span {
+    font-weight: 600;
+  }
 
-.v-application ul {
-  padding: 0;
-}
+  .v-application ul {
+    padding: 0;
+  }
+
+  .card-container .card {
+    border: transparent;
+    padding: 15px 10px;
+    border-radius: 25px;
+    filter: drop-shadow(10px 15px 10px rgba(136, 136, 136, 0.25));
+  }
+
+  .card-container .card.today {
+    background: linear-gradient(115.61deg, #eb3349 -10%, #f45c43 85.47%);
+    color: #fff;
+  }
+
+  .card-container .card.years {
+    background: linear-gradient(115.61deg, #f45c43 -10%, #eb3349 85.47%);
+    color: #fff;
+  }
+
+  .card-container .card.order {
+    background: linear-gradient(115.61deg, #f45c43 -10%, #f45c43 85.47%);
+    color: #fff;
+  }
+
+  .revenue-container .card,
+  .table-container .card {
+    border: transparent;
+    padding: 15px 30px;
+    border-radius: 25px;
+    filter: drop-shadow(10px 15px 10px rgba(136, 136, 136, 0.25));
+  }
+
+  .revenue-container,
+  .table-container {
+    padding: 12px;
+  }
 </style>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
-// @ is an alias to /src
-import Drawer from '../components/_base/Drawer'
+  import { mapActions, mapGetters } from 'vuex'
 
-export default {
-  name: 'Home',
-  components: {
-    Drawer
-  },
-  data() {
-    return {
-      perPage: 5,
-      currentPage: 1,
-      months: '',
-      limit: 8,
-      totalData: ''
+  import Drawer from '../components/_base/Drawer'
+
+  export default {
+    name: 'Home',
+    components: {
+      Drawer
+    },
+    data() {
+      return {
+        perPage: 5,
+        currentPage: 1,
+        months: '',
+        limit: 8,
+        totalData: '',
+        page: 1
+      }
+    },
+    created() {
+      this.getAllIncome()
+      this.getRecentOrder()
+      this.getDataChart()
+    },
+    methods: {
+      ...mapActions(['getAllIncome', 'getRecentOrder', 'getDataChart'])
+    },
+    computed: {
+      ...mapGetters({
+        recentorder: 'getRecent',
+        today: 'getTodayIncome',
+        orders: 'getTotalOrder',
+        year: 'getThisYearIncome',
+        datachart: 'getChartData'
+      })
     }
-  },
-  created() {
-    this.getTodaysIncome()
-    this.getRecentOrder()
-  },
-  methods: {
-    ...mapActions(['getTodaysIncome', 'getRecentOrder'])
-  },
-  computed: {
-    ...mapGetters({
-      todaysincome: 'getTodayIncome',
-      recentorder: 'getRecent'
-    })
   }
-}
 </script>

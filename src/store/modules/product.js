@@ -22,9 +22,7 @@ export default {
   actions: {
     getProducts(context, payload) {
       axios
-        .get(
-          `http://127.0.0.1:3000/product?sort=${context.state.sort}&page=${context.state.page}&limit=${context.state.limit}`
-        )
+        .get(`${process.env.VUE_APP_URL}/product?sort=${context.state.sort}&page=${context.state.page}&limit=${context.state.limit}`)
         .then(response => {
           context.commit('setProducts', response.data.data)
         })
@@ -34,7 +32,7 @@ export default {
     },
     searchProducts(context, payload) {
       axios
-        .get(`http://127.0.0.1:3000/product?search=${payload}`)
+        .get(`${process.env.VUE_APP_URL}/product?search=${payload}`)
         .then(response => {
           context.commit('setProducts', response.data.data)
         })
@@ -45,7 +43,7 @@ export default {
     addProducts(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .post('http://127.0.0.1:3000/product', payload)
+          .post(`${process.env.VUE_APP_URL}/product`, payload)
           .then(response => {
             resolve(response.data.data)
           })
@@ -58,7 +56,7 @@ export default {
       return new Promise((resolve, reject) => {
         axios
           .patch(
-            `http://127.0.0.1:3000/product/${payload.product_id}`,
+            `${process.env.VUE_APP_URL}/product/${payload.product_id}`,
             payload.form
           )
           .then(response => {
@@ -72,7 +70,7 @@ export default {
     deleteProducts(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .delete(`http://127.0.0.1:3000/product/${payload}`)
+          .delete(`${process.env.VUE_APP_URL}/product/${payload}`)
           .then(response => {
             resolve(response)
           })

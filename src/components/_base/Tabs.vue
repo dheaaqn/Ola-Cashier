@@ -2,13 +2,15 @@
   <div>
     <b-row>
       <b-col>
-        <p class="tabsText">
-          <span class="tabsTextBold">Menu</span> Category
-        </p>
+        <p class="tabsText"><span class="tabsTextBold">Menu</span> Category</p>
       </b-col>
       <b-col class="add-category">
         <b-button size="lg" variant="danger" @click="openModal">
-          <b-icon icon="plus-square" variant="light" aria-hidden="true"></b-icon>
+          <b-icon
+            icon="plus-square"
+            variant="light"
+            aria-hidden="true"
+          ></b-icon>
         </b-button>
       </b-col>
     </b-row>
@@ -20,7 +22,8 @@
               <b-button
                 variant="light"
                 @click="sortByCategory(item.category_id)"
-              >{{item.category_name}}</b-button>
+                >{{ item.category_name }}</b-button
+              >
             </b-col>
           </b-row>
         </div>
@@ -48,12 +51,23 @@
             <label for="category-status">Category Status</label>
           </b-col>
           <b-col sm="8">
-            <b-form-input id="category-status" placeholder="1" v-model="form.category_status"></b-form-input>
+            <b-form-input
+              id="category-status"
+              placeholder="1"
+              v-model="form.category_status"
+            ></b-form-input>
           </b-col>
         </b-row>
         <b-row text-center>
           <b-col cols="6">
-            <b-button type="submit" class="mt-3" variant="danger" block @click="closeModal">Cancel</b-button>
+            <b-button
+              type="submit"
+              class="mt-3"
+              variant="danger"
+              block
+              @click="closeModal"
+              >Cancel</b-button
+            >
           </b-col>
           <b-col cols="6">
             <b-button
@@ -62,7 +76,8 @@
               variant="success"
               block
               @click="addCategory()"
-            >Add Category</b-button>
+              >Add Category</b-button
+            >
           </b-col>
         </b-row>
       </b-form-group>
@@ -71,75 +86,75 @@
 </template>
 
 <style scoped>
-.tabsText {
-  font-size: 2em;
-}
+  .tabsText {
+    font-size: 2em;
+  }
 
-.tabsTextBold {
-  font-weight: 600;
-}
+  .tabsTextBold {
+    font-weight: 600;
+  }
 
-.add-category {
-  text-align: right;
-}
+  .add-category {
+    text-align: right;
+  }
 
-.tabs-container {
-  height: 80px;
-  background-color: #ffda6c;
-  border-radius: 15px;
-  align-content: center;
-}
+  .tabs-container {
+    height: 80px;
+    background-color: #ffda6c;
+    border-radius: 15px;
+    align-content: center;
+  }
 </style>
 
 <script>
-import axios from 'axios'
+  import axios from 'axios'
 
-export default {
-  data() {
-    return {
-      category: [],
-      form: {
-        category_name: '',
-        category_status: 1
+  export default {
+    data() {
+      return {
+        category: [],
+        form: {
+          category_name: '',
+          category_status: 1
+        }
+      }
+    },
+    created() {
+      this.getCategory()
+    },
+    methods: {
+      getCategory() {
+        axios
+          .get(`${process.env.VUE_APP_URL}/category`)
+          .then((res) => {
+            this.category = res.data.data
+            console.log(this.category)
+          })
+          .catch((err) => {
+            return console.log(err)
+          })
+      },
+      addCategory() {
+        axios
+          .post(`${process.env.VUE_APP_URL}/category`, this.form)
+          .then((res) => {
+            this.$refs['add-category-modal'].hide()
+            this.getCategory()
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+      },
+      sortByCategory(id) {
+        console.log(id)
+        this.$emit('categoryId', id)
+      },
+      openModal() {
+        this.$refs['add-category-modal'].show()
+      },
+      closeModal() {
+        this.$refs['add-category-modal'].hide()
       }
     }
-  },
-  created() {
-    this.getCategory()
-  },
-  methods: {
-    getCategory() {
-      axios
-        .get('http://127.0.0.1:3000/category')
-        .then((res) => {
-          this.category = res.data.data
-          console.log(this.category)
-        })
-        .catch((err) => {
-          return console.log(err)
-        })
-    },
-    addCategory() {
-      axios
-        .post('http://127.0.0.1:3000/category', this.form)
-        .then((res) => {
-          this.$refs['add-category-modal'].hide()
-          this.getCategory()
-        })
-        .catch((error) => {
-          console.log(error)
-        })
-    },
-    sortByCategory(id) {
-      console.log(id)
-      this.$emit('categoryId', id)
-    },
-    openModal() {
-      this.$refs['add-category-modal'].show()
-    },
-    closeModal() {
-      this.$refs['add-category-modal'].hide()
-    }
   }
-}
 </script>

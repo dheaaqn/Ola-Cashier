@@ -20,7 +20,7 @@ export default {
     checkoutOrder(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .post('http://127.0.0.1:3000/order', payload)
+          .post(`${process.env.VUE_APP_URL}/order`, payload)
           .then(response => {
             context.commit('setReceipt', response.data.data)
             resolve(response.data.data)

@@ -2,9 +2,9 @@ import axios from 'axios'
 
 export default {
   state: {
-    todaysincome: null,
-    totalorders: null,
-    yearsincome: null,
+    todaysincome: 0,
+    totalorders: 0,
+    yearsincome: 0,
     dataChart: [],
     recentorder: []
   },
@@ -19,84 +19,55 @@ export default {
       state.yearsincome = payload
     },
     setDataChart(state, payload) {
-      for (let i = 0; i < payload.length; i++) {
-        state.dataChart.push([payload[i].date, payload[i].sum])
-      }
+      state.dataChart = payload
     },
     setRecentOrder(state, payload) {
       state.recentorder = payload
     }
   },
   actions: {
-    getTodaysIncome(context, payload) {
-      axios
-        .get('http://127.0.0.1:3000/history/dashboard/todaysincome')
-        .then(response => {
-          if (response.data.data[0].todays_income != null) {
-            context.commit(
-              'setTodaysIncome',
-              response.data.data[0].todays_income
-            )
-          } else {
-            context.commit('setTodaysIncome', 0)
-          }
-        })
-        .catch(error => {
-          console.log(error.response)
-        })
-    },
-    getTotalOrders(context, payload) {
-      // console.log(payload)
-      axios
-        .get('http://127.0.0.1:3000/history/dashboard/totalorders')
-        .then(response => {
-          if (response.data.data[0].total_orders != null) {
-            context.commit('setTotalOrders', response.data.data[0].total_orders)
-          } else {
-            context.commit('setTotalOrders', 0)
-          }
-        })
-        .catch(error => {
-          console.log(error.response)
-        })
-    },
-    getThisYearsIncome(context, payload) {
-      axios
-        .get('http://127.0.0.1:3000/history/dashboard/thisyearincome')
-        .then(response => {
-          if (response.data.data[0].this_years_income != null) {
-            context.commit(
-              'setThisYearsIncome',
-              response.data.data[0].this_years_income
-            )
-          } else {
-            context.commit('setThisYearsIncome', 0)
-          }
-        })
-        .catch(error => {
-          console.log(error.response)
-        })
+    getAllIncome(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .get(`${process.env.VUE_APP_URL}/history/dashboard/all`)
+          .then(response => {
+            context.commit('setTodaysIncome', response.data.data.todaysIncome)
+            context.commit('setTotalOrders', response.data.data.totalOrders)
+            context.commit('setThisYearsIncome', response.data.data.thisYearsIncome)
+            resolve(response.data.data)
+          })
+          .catch(error => {
+            reject(error.response)
+          })
+      })
     },
     getDataChart(context, payload) {
-      axios
-        .get('http://127.0.0.1:3000//history/dashboard/datachart')
-        .then(response => {
-          context.commit('setDataChart', response.data.data)
-        })
-        .catch(error => {
-          console.log(error)
-        })
+      return new Promise((resolve, reject) => {
+        axios
+          .get(`${process.env.VUE_APP_URL}/history/dashboard/datachart`)
+          .then(response => {
+            const data = []
+            response.data.data.map(x => data.push([x.date_chart.slice(0, 10), x.sum_subtotal]))
+            console.log(data)
+            context.commit('setDataChart', data)
+          })
+          .catch(error => {
+            reject(error.response)
+          })
+      })
     },
     getRecentOrder(context, payload) {
-      axios
-        .get('http://127.0.0.1:3000/history/')
-        .then(response => {
-          context.commit('setRecentOrder', response.data.data)
-          console.log('aslinya bisa')
-        })
-        .catch(error => {
-          return console.log(error)
-        })
+      return new Promise((resolve, reject) => {
+        axios
+          .get(`${process.env.VUE_APP_URL}/history/dashboard/recentorder`)
+          .then(response => {
+            context.commit('setRecentOrder', response.data.data)
+            resolve(response.data.data)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
     }
   },
   getters: {

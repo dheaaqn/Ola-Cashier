@@ -518,13 +518,6 @@
           product_status: data.product_status
         }
         this.product_id = data.product_id
-      },
-      makeToast(msg, title, variant) {
-        this.$bvToast.toast(msg, {
-          title: title,
-          variant: variant,
-          solid: true
-        })
       }
     },
     computed: {
