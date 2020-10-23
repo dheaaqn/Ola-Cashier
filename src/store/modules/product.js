@@ -45,6 +45,8 @@ export default {
         axios
           .post(`${process.env.VUE_APP_URL}/product`, payload)
           .then(response => {
+            context.commit('setProducts', response.data.data)
+            console.log(response.data)
             resolve(response.data.data)
           })
           .catch(error => {
@@ -60,6 +62,7 @@ export default {
             payload.form
           )
           .then(response => {
+            context.commit('setProducts', response.data.data)
             resolve(response.data.data)
           })
           .catch(error => {

@@ -100,7 +100,7 @@
             this.$router.push('/')
           })
           .catch((error) => {
-            console.log(error)
+            this.makeToast(`${error}`, 'Failed', 'danger')
           })
       },
       onReset() {

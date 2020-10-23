@@ -36,11 +36,10 @@ export default {
         axios
           .post(`${process.env.VUE_APP_URL}/users/register`, payload)
           .then(response => {
-            console.log(response)
-            resolve(response)
+            resolve(response.data)
           })
           .catch(error => {
-            console.log(error.response)
+            reject(error.response.data.message)
           })
       })
     },
@@ -67,7 +66,6 @@ export default {
           return response
         },
         function (error) {
-          console.log(error.response)
           if (error.response.status === 403) {
             if (
               error.response.data.msg === 'invalid token' ||
