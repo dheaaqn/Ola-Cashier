@@ -67,7 +67,7 @@
         <b-tab title="Category">
           <b-row>
             <b-col md="10">
-              <p><span>Manage</span> Category</p>
+              <p class="category"><span>Manage</span> Category</p>
             </b-col>
             <b-col md="2" class="text-right">
               <b-button size="lg" variant="success" @click="openModalCategory">
@@ -298,6 +298,60 @@
 
   ul.pagination {
     padding-left: 0;
+  }
+
+  @media screen and (max-width: 425px) {
+    .card {
+      padding: 0;
+    }
+
+    .v-application .flex-column {
+      flex-direction: row !important;
+    }
+
+    .tabs.row {
+      padding: 0;
+    }
+    .row {
+      padding: 0px 24px;
+    }
+
+    .col-md-10 {
+      width: 229px;
+    }
+
+    .col-md-2 {
+      width: 60px;
+    }
+
+    .btn-success {
+      width: 48px;
+      height: 48px;
+      padding: 8px;
+    }
+
+    p {
+      font-size: 1.7em;
+    }
+
+    .t-table {
+      overflow-x: auto;
+    }
+
+    .btn-warning,
+    .btn-danger {
+      width: 30px;
+      height: 30px;
+      padding: 4px;
+    }
+
+    .table td {
+      text-align: center;
+    }
+
+    p.category {
+      font-size: 1.5em;
+    }
   }
 </style>
 

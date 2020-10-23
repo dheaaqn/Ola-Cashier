@@ -6,19 +6,19 @@
       </b-col>
       <b-col cols="11">
         <b-row class="card-container">
-          <b-col>
+          <b-col md="4" sm="12">
             <b-card title="Today's Income" class="today">
               <b-card-text>Rp. {{ today }}</b-card-text>
               <p style="font-size: 16px">+3% yesterday</p>
             </b-card>
           </b-col>
-          <b-col>
+          <b-col md="4" sm="12">
             <b-card title="Orders" class="order">
               <b-card-text>{{ orders }}</b-card-text>
               <p style="font-size: 16px">+2% last week</p>
             </b-card>
           </b-col>
-          <b-col>
+          <b-col md="4" sm="12">
             <b-card title="This Year's Income" class="years">
               <b-card-text>Rp. {{ year }}</b-card-text>
               <p style="font-size: 16px">+12% last year</p>
@@ -55,18 +55,8 @@
         <b-row class="table-container">
           <b-col class="card">
             <b-row>
-              <b-col>
-                <p><span>Recent</span> Order</p>
-              </b-col>
-            </b-row>
-            <b-row>
               <b-col cols="10">
-                <b-pagination
-                  v-model="page"
-                  align="fill"
-                  :total-rows="totalData"
-                  :per-page="limit"
-                ></b-pagination>
+                <p><span>Recent</span> Order</p>
               </b-col>
               <b-col cols="2">
                 <b-dropdown
@@ -175,6 +165,58 @@
   .revenue-container,
   .table-container {
     padding: 12px;
+  }
+
+  @media screen and (max-width: 425px) {
+    .col-1 {
+      display: none;
+    }
+
+    .col-11 {
+      padding: 30px 0px 30px 36px;
+    }
+
+    .revenue-container .card .col-10,
+    .table-container .card .col-10 {
+      max-width: 215px;
+    }
+
+    .revenue-container .card .col-2,
+    .table-container .card .col-2 {
+      max-width: 140px;
+    }
+
+    .revenue-container .card .col-10 p,
+    .table-container .col p {
+      font-size: 1.7em;
+      margin: 0;
+    }
+
+    .t-table {
+      overflow-x: auto;
+    }
+  }
+
+  @media screen and (max-width: 320px) {
+    .revenue-container .card .col-10,
+    .table-container .card .col-10 {
+      max-width: 119px;
+    }
+
+    .revenue-container .card .col-2,
+    .table-container .card .col-2 {
+      max-width: 140px;
+    }
+
+    .revenue-container .card .col-10 p,
+    .table-container .col p {
+      font-size: 1.5em;
+      margin: 0;
+    }
+
+    li .page-item {
+      width: 19px;
+    }
   }
 </style>
 
