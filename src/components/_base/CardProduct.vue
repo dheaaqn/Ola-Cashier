@@ -1,67 +1,55 @@
 <template>
   <div>
     <b-row>
-      <b-col cols="4">
+      <b-col md="4" sm="12" class="title">
         <p class="cardText"><span class="cardTextBold">Choose</span> Order</p>
       </b-col>
-      <b-col cols="4">
-        <b-row>
-          <b-col style="text-align: right">
-            <b-input-group size="md" class="mb-2">
-              <b-form-input
-                type="search"
-                placeholder="Keyword.."
-                v-model="keyword"
-              ></b-form-input>
-              <b-button
-                type="button"
-                @click="searchProduct()"
-                variant="danger text-white"
-              >
-                <b-icon icon="search"></b-icon>
-              </b-button>
-            </b-input-group>
-          </b-col>
-        </b-row>
+      <b-col md="4" sm="12" class="search">
+        <b-input-group size="md" class="mb-2">
+          <b-form-input
+            type="search"
+            placeholder="Keyword.."
+            v-model="keyword"
+          ></b-form-input>
+          <b-button
+            type="button"
+            @click="searchProduct()"
+            variant="danger text-white"
+          >
+            <b-icon icon="search"></b-icon>
+          </b-button>
+        </b-input-group>
       </b-col>
-      <b-col cols="2">
-        <b-row>
-          <b-col style="text-align: right">
-            <b-dropdown
-              id="dropdown-buttons"
-              text="Category  "
-              variant="danger text-white"
-            >
-              <b-dropdown-item-button
-                v-for="(item, index) in category"
-                :key="index"
-                @click="getProductByCategory(item.category_id)"
-                >{{ item.category_name }}</b-dropdown-item-button
-              >
-            </b-dropdown>
-          </b-col>
-        </b-row>
+      <b-col md="2" sm="6">
+        <b-dropdown
+          id="dropdown-buttons"
+          text="Category  "
+          variant="danger text-white"
+        >
+          <b-dropdown-item-button
+            v-for="(item, index) in category"
+            :key="index"
+            @click="getProductByCategory(item.category_id)"
+            >{{ item.category_name }}</b-dropdown-item-button
+          >
+        </b-dropdown>
       </b-col>
-      <b-col cols="2">
-        <b-row>
-          <b-col style="text-align: right">
-            <b-dropdown
-              id="dropdown-buttons"
-              text="Sort By  "
-              variant="danger text-white"
-            >
-              <b-dropdown-item-button @click="sortByName"
-                >By Product Name</b-dropdown-item-button
-              >
-              <b-dropdown-item-button @click="sortByPrice"
-                >By Product Price</b-dropdown-item-button
-              >
-              <b-dropdown-item-button @click="sortByDate"
-                >By Last Added</b-dropdown-item-button
-              >
-            </b-dropdown>
-          </b-col>
-        </b-row>
+      <b-col md="2" sm="6">
+        <b-dropdown
+          id="dropdown-buttons"
+          text="Sort By  "
+          variant="danger text-white"
+        >
+          <b-dropdown-item-button @click="sortByName"
+            >By Product Name</b-dropdown-item-button
+          >
+          <b-dropdown-item-button @click="sortByPrice"
+            >By Product Price</b-dropdown-item-button
+          >
+          <b-dropdown-item-button @click="sortByDate"
+            >By Last Added</b-dropdown-item-button
+          >
+        </b-dropdown>
       </b-col>
     </b-row>
     <b-row>
@@ -133,6 +121,52 @@
     height: 72vh;
     overflow-y: scroll;
     overflow-x: hidden;
+  }
+
+  @media screen and (max-width: 425px) {
+    .col-sm-6 {
+      max-width: 110px;
+      margin: 0 5px;
+    }
+
+    .cardText {
+      width: 337px;
+    }
+
+    .btn-danger {
+      width: 38px;
+      padding: 6px;
+      font-size: 14px;
+    }
+
+    input.form-control {
+      width: 70px;
+    }
+  }
+
+  @media screen and (max-width: 375px) {
+    .cardText {
+      width: 299px;
+    }
+
+    .btn-danger {
+      width: 38px;
+      padding: 6px;
+      font-size: 14px;
+    }
+
+    .card-body {
+      padding: 6px;
+    }
+
+    .card-body img {
+      width: 80px !important;
+      height: 80px !important;
+    }
+
+    .card-body p {
+      margin: 6px 0px;
+    }
   }
 </style>
 

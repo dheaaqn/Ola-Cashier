@@ -11,18 +11,24 @@
 </template>
 
 <script>
-import Card from '../_base/CardProduct'
+  import Card from '../_base/CardProduct'
 
-export default {
-  name: 'Content',
-  components: {
-    Card
+  export default {
+    name: 'Content',
+    components: {
+      Card
+    }
   }
-}
 </script>
 
 <style scoped>
-.c-container {
-  padding: 0px 56px;
-}
+  .c-container {
+    padding: 20px 56px;
+  }
+
+  @media screen and (max-width: 320px) {
+    .c-container {
+      padding: 20px 30px;
+    }
+  }
 </style>

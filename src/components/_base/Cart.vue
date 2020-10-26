@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="cart-container">
     <b-row>
       <b-col>
         <p class="cartText"><span class="cartTextBold">Order</span> Menu</p>
@@ -85,10 +85,10 @@
     </b-row>
     <b-modal id="checkoutModal" title="Receipt" hide-footer centered>
       <b-row class="data">
-        <b-col md="6"
+        <b-col md="6" sm="6"
           ><p class="cashier">Cashier: {{ user.user_name }}</p></b-col
         >
-        <b-col md="6"
+        <b-col md="6" sm="6"
           ><p class="invoice">
             Receipt No: #{{ receipt.history_invoice }}
           </p></b-col
@@ -99,27 +99,27 @@
         v-for="(item, index) in receipt.orders"
         :key="index"
       >
-        <b-col md="8"
+        <b-col md="8" sm="6"
           ><p class="name">
             {{ item.product_name }} {{ item.order_qty }}x
           </p></b-col
         >
-        <b-col md="4"
+        <b-col md="4" sm="6"
           ><p class="price">
             Rp. {{ item.product_price * item.order_qty }}
           </p></b-col
         >
       </b-row>
       <b-row class="ppn">
-        <b-col md="8"><p>Ppn 10%:</p></b-col>
-        <b-col md="4"
+        <b-col md="8" sm="6"><p>Ppn 10%:</p></b-col>
+        <b-col md="4" sm="6"
           ><p>Rp. {{ receipt.ppn }}</p></b-col
         >
       </b-row>
       <hr />
       <b-row class="subtotal">
-        <b-col md="8"><p>Subtotal:</p></b-col>
-        <b-col md="4"
+        <b-col md="8" sm="6"><p>Subtotal:</p></b-col>
+        <b-col md="4" sm="6"
           ><p>Rp. {{ receipt.history_subtotal }}</p></b-col
         >
       </b-row>
@@ -185,6 +185,48 @@
 
   .form-control {
     padding: 6px;
+  }
+
+  @media screen and (max-width: 425px) {
+    .cart-container {
+      padding: 0 56px;
+    }
+
+    .col-md-7 {
+      max-width: 145px;
+    }
+
+    .col-md-5 {
+      max-width: 100px;
+    }
+
+    .offset-4 {
+      margin-left: 0;
+    }
+
+    .col-sm-6 {
+      max-width: 198px;
+    }
+  }
+
+  @media screen and (max-width: 375px) {
+    .col-md-7 {
+      max-width: 93px;
+    }
+
+    .col-md-5 {
+      max-width: 71x;
+    }
+
+    .col-sm-6 {
+      max-width: 174.5px;
+    }
+  }
+
+  @media screen and (max-width: 320px) {
+    .cart-container {
+      padding: 20px 30px;
+    }
   }
 </style>
 

@@ -76,6 +76,20 @@
     border: transparent;
     background-color: #eb3349;
   }
+
+  @media screen and (max-width: 425px) {
+    .card {
+      padding: 3em;
+      max-width: 325px;
+    }
+  }
+
+  @media screen and (max-width: 320px) {
+    .card {
+      padding: 2em;
+      max-width: 300px;
+    }
+  }
 </style>
 
 <script>

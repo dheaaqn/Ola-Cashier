@@ -4,6 +4,9 @@
       <b-col cols="1">
         <Drawer />
       </b-col>
+      <b-col cols="12">
+        <Navbar />
+      </b-col>
       <b-col cols="11">
         <b-row class="card-container">
           <b-col md="4" sm="12">
@@ -33,7 +36,7 @@
                   <span>Revenue</span>
                 </p>
               </b-col>
-              <b-col cols="2" align-self="end">
+              <b-col cols="2" align-self="end" class="revenue">
                 <b-dropdown
                   id="dropdown-buttons"
                   text="View By "
@@ -58,7 +61,7 @@
               <b-col cols="10">
                 <p><span>Recent</span> Order</p>
               </b-col>
-              <b-col cols="2">
+              <b-col cols="2" class="recentorder">
                 <b-dropdown
                   id="dropdown-buttons"
                   text="View By  "
@@ -167,6 +170,10 @@
     padding: 12px;
   }
 
+  .col-12 {
+    display: none;
+  }
+
   @media screen and (max-width: 425px) {
     .col-1 {
       display: none;
@@ -195,17 +202,21 @@
     .t-table {
       overflow-x: auto;
     }
-  }
 
-  @media screen and (max-width: 320px) {
-    .revenue-container .card .col-10,
-    .table-container .card .col-10 {
-      max-width: 119px;
+    .col-12 {
+      display: block;
+      padding: 0;
     }
 
-    .revenue-container .card .col-2,
-    .table-container .card .col-2 {
-      max-width: 140px;
+    .navbar {
+      padding: 0.5rem 1.5rem;
+    }
+  }
+
+  @media screen and (max-width: 375px) {
+    .revenue-container .card .col-10,
+    .table-container .card .col-10 {
+      max-width: 169px;
     }
 
     .revenue-container .card .col-10 p,
@@ -218,17 +229,37 @@
       width: 19px;
     }
   }
+
+  @media screen and (max-width: 320px) {
+    .revenue-container .card .col-10 {
+      max-width: 119px;
+    }
+
+    .revenue-container .card .col-10 p {
+      width: 100px;
+    }
+
+    .table-container .card .col-10 {
+      max-width: 243px;
+    }
+
+    .table-container .card .col-2 {
+      margin-left: 119px;
+    }
+  }
 </style>
 
 <script>
   import { mapActions, mapGetters } from 'vuex'
 
   import Drawer from '../components/_base/Drawer'
+  import Navbar from '../components/_base/Navbar'
 
   export default {
     name: 'Home',
     components: {
-      Drawer
+      Drawer,
+      Navbar
     },
     data() {
       return {

@@ -353,6 +353,54 @@
       font-size: 1.5em;
     }
   }
+
+  @media screen and (max-width: 375px) {
+    .card-body {
+      padding: 15px;
+    }
+
+    .col-md-10 {
+      max-width: 215px;
+    }
+
+    .btn-success {
+      width: 38px;
+      height: 38px;
+      padding: 4px;
+    }
+
+    .col-md-2 {
+      width: 38px;
+    }
+
+    p {
+      font-size: 1.5em;
+    }
+  }
+
+  @media screen and (max-width: 320px) {
+    .card-body {
+      padding: 10px;
+    }
+
+    .col-md-10 {
+      max-width: 171px;
+    }
+
+    .btn-success {
+      width: 36px;
+      height: 36px;
+      padding: 2px;
+    }
+
+    .col-md-2 {
+      width: 38px;
+    }
+
+    p {
+      font-size: 1.2em;
+    }
+  }
 </style>
 
 <script>

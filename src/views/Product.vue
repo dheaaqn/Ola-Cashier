@@ -4,6 +4,9 @@
       <b-col cols="1">
         <Drawer />
       </b-col>
+      <b-col cols="12">
+        <Navbar />
+      </b-col>
       <b-col cols="11">
         <Table />
       </b-col>
@@ -14,12 +17,14 @@
 <script>
   import Table from '../components/_base/Table'
   import Drawer from '../components/_base/Drawer'
+  import Navbar from '../components/_base/Navbar'
 
   export default {
     name: 'Product',
     components: {
       Table,
-      Drawer
+      Drawer,
+      Navbar
     }
   }
 </script>
@@ -41,6 +46,9 @@
     height: 100vh;
     overflow-y: auto;
   }
+  .col-12 {
+    display: none;
+  }
 
   @media screen and (max-width: 425px) {
     .col-1 {
@@ -55,6 +63,17 @@
 
     .col-11 {
       padding: 30px 0px 30px 36px;
+    }
+
+    .col-12 {
+      padding: 0;
+      display: block;
+    }
+  }
+
+  @media screen and (max-width: 375px) {
+    .col-11 {
+      padding: 25px 0px 25px 30px;
     }
   }
 </style>
