@@ -7,7 +7,7 @@
     <a href="https://github.com/dheaaqn/Ola-Cashier/issues">Request Feature</a>
   </p>
 
-![Image Banner](https://user-images.githubusercontent.com/41566487/96096198-c7ffae80-0ef9-11eb-9281-91d4fe0ac355.jpg)
+![Image Banner](https://user-images.githubusercontent.com/41566487/99797241-77671b00-2b61-11eb-92ec-b198fe4e85c1.jpg)
 
 ## About The Project
 
